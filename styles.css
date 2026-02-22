@@ -1,9 +1,16 @@
+html {
+    max-height: 640px;
+    overflow-y: auto;
+}
+
 body {
     font-family: "Segoe UI", sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f5f7fa;
     width: 320px;
+    max-height: 640px;
+    overflow-y: auto;
 }
 .disclaimer {
     margin-top: 10px;
@@ -15,6 +22,8 @@ body {
 .popup-container {
     padding: 20px;
     text-align: center;
+    max-height: 620px;
+    overflow-y: auto;
 }
 
 .logo {
@@ -72,7 +81,7 @@ button:hover {
     border-radius: 5px;
     font-size: 13px;
     text-align: left;
-    max-height: 250px;
+    max-height: 400px;
     overflow-y: auto;
     color: #333;
     white-space: pre-wrap;
@@ -111,6 +120,15 @@ textarea,
     max-width: 280px;
     margin: 0 auto 10px auto;
     box-sizing: border-box;
+}
+
+#summary,
+#qaAnswer {
+    max-height: 500px;
+    min-height: 160px;
+    overflow-y: auto;
+    display: block;
+    word-wrap: break-word;
 }
 
 /* Specific styles for textarea */
