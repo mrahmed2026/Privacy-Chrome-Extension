@@ -107,6 +107,7 @@ document.getElementById("fetchPolicy").addEventListener("click", () => {
                     .trim();
 
                 summaryBox.innerHTML = cleanedHTML;
+                console.log("Summary (HTML):", cleanedHTML);
                 makeSummarySectionsInteractive();
             });
         });
@@ -115,10 +116,15 @@ document.getElementById("fetchPolicy").addEventListener("click", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        const sectionsList = document.getElementById("sectionsList");
+        if (!sectionsList) {
+            console.warn("sectionsList container not found");
+            return;
+        }
         chrome.tabs.sendMessage(tabs[0].id, { action: "getHeadings" }, (response) => {
             if (chrome.runtime.lastError) {
                 console.error("Error sending message to content script:", chrome.runtime.lastError.message);
-                document.getElementById("sectionsList").textContent = "Failed to load headings.";
+                sectionsList.textContent = "Failed to load headings (page may be restricted).";
                 return;
             }
 
@@ -126,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 knownPageHeadings = response.headings;
                 renderSections(response.headings);
             } else {
-                document.getElementById("sectionsList").textContent = "Failed to load headings.";
+                sectionsList.textContent = "Failed to load headings.";
             }
         });
     });
@@ -160,6 +166,13 @@ document.getElementById("askQuestion").addEventListener("click", () => {
             target: { tabId: tabs[0].id },
             func: () => document.body.innerText
         }, (results) => {
+            if (chrome.runtime.lastError) {
+                console.error("Script execution failed:", chrome.runtime.lastError.message);
+                answerBox.textContent = "Cannot read this page (restricted).";
+                loader.style.display = "none";
+                return;
+            }
+
             const fullText = results[0]?.result || "";
 
             chrome.runtime.sendMessage({
@@ -171,6 +184,7 @@ document.getElementById("askQuestion").addEventListener("click", () => {
                 const cleanAnswer = (response.answer || "No answer returned.")
                 .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
             answerBox.innerHTML = cleanAnswer;
+            console.log("Answer:", cleanAnswer);
                         });
         });
     });
