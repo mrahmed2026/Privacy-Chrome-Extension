@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Privacy Simplifier</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="popup-container">
+        <img src="icon.png" alt="PrivacyLLM Logo" class="logo" onerror="this.style.display='none';">
+        <h1>Privacy Simplifier</h1>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="simplify">Simplify</button>
+            <button class="tab-btn" data-tab="qa">Q&A</button>
+        </div>
+
+        <div id="simplify" class="tab-content active">
+            <p>Click below to simplify the privacy policy on this page:</p>
+            <button id="fetchPolicy">Simplify Now</button>
+            <div class="loader" id="loader" style="display:none;"></div>
+            <div class="result" id="summary">Your summary will appear here...</div>
+        </div>
+
+        <div id="qa" class="tab-content">
+            <p>Ask a question about the privacy policy:</p>
+            <textarea id="userQuestion" rows="3" placeholder="Type your question..."></textarea>
+            <button id="askQuestion">Ask</button>
+            <div class="loader" id="qaLoader" style="display:none;"></div>
+            <div class="result" id="qaAnswer">Answer will appear here...</div>
+        </div>
+
+        <div class="disclaimer">
+            <small>
+                <strong>Disclaimer:</strong> This tool is for informational purposes only and does not replace the original privacy policy document. Please refer to the original policy for complete and authoritative information.
+            </small>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
